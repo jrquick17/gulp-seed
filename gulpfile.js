@@ -15,12 +15,16 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-gulp.task('embed', function () {
-    gulp.src('./src/[TEMPLATE]/*.js')
+gulp.task('embed-[DIRECTIVE]', function () {
+    gulp.src('./www/js/[DIRECTIVE]/directive/*.js')
         .pipe(embedTemplates())
         .on('error', errorWarning)
-        .pipe(gulp.dest('./src'));
+        .pipe(gulp.dest('./www/js/[DIRECTIVE]'));
 });
+
+gulp.task('embed', [
+    'embed-[DIRECTIVE]'
+]);
 
 gulp.task('sass', function() {
     return gulp.src('./sass/*')
@@ -29,7 +33,10 @@ gulp.task('sass', function() {
 });
 
 gulp.task('lint', function() {
-    return gulp.src('./src/**/*.js')
+    return gulp.src([
+            './www/js/*.js',
+            './www/js/*/*.js'
+        ])
         .pipe(jshint())
         .on('error', errorWarning)
         .pipe(jshint.reporter('default'));
@@ -37,31 +44,24 @@ gulp.task('lint', function() {
 
 gulp.task('scripts', function() {
     return gulp.src([
-            './src/*.js',
-            '!./src/index.js'
+            './www/js/*.js',
+            './www/js/*/*.js',
+            '!./www/js/index.js'
         ])
-        .pipe(concat('[TEMPLATE].js'))
+        .pipe(concat('[TEMPLATE].full.js'))
         .pipe(gulp.dest('./dist'))
+        .pipe(sourcemaps.init())
         .pipe(rename('[TEMPLATE].min.js'))
         .pipe(uglify())
         .on('error', errorWarning)
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('browserify', function() {
-    runSequence = require('run-sequence').use(gulp);
-
-    runSequence(
-        'scripts',
-        'browserify-concat',
-        'browserify-task'
-    );
 });
 
 gulp.task('browserify-concat', function() {
     return gulp.src([
-            './src/index.js',
-            './dist/[TEMPLATE].js'
+            './www/js/index.js',
+            './dist/[TEMPLATE].full.js'
         ])
         .pipe(concat('index.js'))
         .pipe(gulp.dest('./dist'))
@@ -80,11 +80,22 @@ gulp.task('browserify-task', function() {
         .pipe(gulp.dest('./dist'))
 });
 
+gulp.task('browserify', function() {
+    runSequence = require('run-sequence').use(gulp);
+
+    runSequence(
+        'scripts',
+        'browserify-concat',
+        'browserify-task'
+    );
+});
+
 gulp.task('watch', function() {
-    gulp.watch('./src/*', ['build']);
-    gulp.watch('./src/[TEMPLATE]/*', ['embed']);
-    gulp.watch('./src/index.js', ['browserify']);
-    gulp.watch('./dist/[TEMPLATE].js', ['browserify']);
+    gulp.watch('./www/js/*', ['build']);
+    gulp.watch('./www/js/**/*', ['build']);
+    gulp.watch('./www/js/**/directive/*', ['embed']);
+    gulp.watch('./www/js/index.js', ['browserify']);
+    gulp.watch('./dist/[TEMPLATE].full.js', ['browserify']);
     gulp.watch('./package.json', ['browserify']);
     gulp.watch('./sass/*', ['sass']);
 });
