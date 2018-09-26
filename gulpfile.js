@@ -1,3 +1,11 @@
+/**
+ * @description A seed start to a gulp project supporting SASS/SCSS compilation, linting, embedding angular directives, javascript minification, bundling, and launching servers and proxies right out of the box.
+ *
+ * @source https://github.com/jrquick17/gulp-seed
+ * @author Jeremy Quick <me@jrquick.com>
+ * @website http://jrquick.com
+ * @license unlicense
+ */
 var gulp = require('gulp');
 
 var babel = require('babelify');
@@ -15,6 +23,9 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+/**
+ * Angular directive that requires embedding
+ */
 gulp.task('embed-[DIRECTIVE]', function () {
     gulp.src('./www/js/[DIRECTIVE]/directive/*.js')
         .pipe(embedTemplates())
@@ -22,16 +33,27 @@ gulp.task('embed-[DIRECTIVE]', function () {
         .pipe(gulp.dest('./www/js/[DIRECTIVE]'));
 });
 
+/**
+ * List of individual angular directives from above
+ */
 gulp.task('embed', [
     'embed-[DIRECTIVE]'
 ]);
 
+/**
+ * Compile SASS
+ *
+ * Change sass() to scss() for SCSS
+ */
 gulp.task('sass', function() {
     return gulp.src('./sass/*')
         .pipe(sass())
         .pipe(gulp.dest('./dist/css'));
 });
 
+/**
+ * Checks for potential JavaScript issues
+ */
 gulp.task('lint', function() {
     return gulp.src([
             './www/js/*.js',
@@ -42,6 +64,9 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 
+/**
+ * Compiles, bundles, and minifies the JavaScript files
+ */
 gulp.task('scripts', function() {
     return gulp.src([
             './www/js/*.js',
@@ -90,6 +115,9 @@ gulp.task('browserify', function() {
     );
 });
 
+/**
+ * Watch for changes and run the necessary tasks
+ */
 gulp.task('watch', function() {
     gulp.watch('./www/js/*', ['build']);
     gulp.watch('./www/js/**/*', ['build']);
@@ -100,6 +128,9 @@ gulp.task('watch', function() {
     gulp.watch('./sass/*', ['sass']);
 });
 
+/**
+ * Create server
+ */
 gulp.task('browser-serve', function() {
     browserSync.init({
         server: {
@@ -111,6 +142,9 @@ gulp.task('browser-serve', function() {
     gulp.watch('./dist/[TEMPLATE].bundle.js').on('change', browserSync.reload);
 });
 
+/**
+ * Create proxy server
+ */
 gulp.task('browser-proxy', function() {
     browserSync.init({
         proxy: {
@@ -122,6 +156,9 @@ gulp.task('browser-proxy', function() {
     gulp.watch('./dist/[TEMPLATE].bundle.js').on('change', browserSync.reload);
 });
 
+/**
+ * Define build task
+ */
 gulp.task('build', [
     'embed',
     'sass',
@@ -129,21 +166,35 @@ gulp.task('build', [
     'browserify'
 ]);
 
+/**
+ * Define default task
+ */
 gulp.task('default', [
     'build',
     'watch'
 ]);
 
+/**
+ * Define serve task
+ */
 gulp.task('serve', [
     'default',
     'browser-serve'
 ]);
 
+/**
+ * Define proxy server task
+ */
 gulp.task('proxy', [
     'default',
     'browser-proxy'
 ]);
 
+/**
+ * Output error
+ *
+ * @param error
+ */
 function errorWarning(error) {
     console.log(error.toString());
 }
