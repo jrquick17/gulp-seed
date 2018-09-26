@@ -1,10 +1,12 @@
 ## Synopsis
   
-A seed start to a gulp project supporting SASS/SCSS compilation, embedding angular directives, javascript minification, bundling, and launching servers and proxies right out of the box.
+A seed start to a gulp project supporting SASS/SCSS compilation, linting, embedding angular directives, javascript minification, bundling, and launching servers and proxies right out of the box.
 
 ## Installation
 
 * Copy gulpfile.js into project root.
+**Replace [DIRECTIVE] with the name of each angular directive
+**Replace [TEMPLATE] to the desired output file name
 
 * Install npm dependencies (Check out package.json for an example)
 
