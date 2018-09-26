@@ -2,6 +2,10 @@
   
 A seed start to a gulp project supporting SASS/SCSS compilation, linting, embedding angular directives, javascript minification, bundling, and launching servers and proxies right out of the box.
 
+## Example
+
+Checkout https://github.com/jrquick17/angualrjs-gulp-npm-seed for a working project using this repo.
+
 ## Installation
 
 * Copy gulpfile.js into project root.
