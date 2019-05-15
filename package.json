@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-      "url": "git+ssh://git@github.com:jrquick17/gulp-seed.git"
+    "url": "git+ssh://git@github.com:jrquick17/gulp-seed.git"
   },
   "author": "",
   "license": "ISC",
   "homepage": "https://github.com/jrquick17/gulp-seed#readme",
   "devDependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.4.4",
     "babel-core": "^6.26.3",
     "babelify": "^10.0.0",
-    "browser-sync": "^2.24.7",
+    "browser-sync": "^2.26.5",
     "browserify": "^16.2.3",
     "browserify-resolutions": "^1.1.0",
     "buffer": "^5.2.1",
@@ -29,14 +29,15 @@
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.1.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.10.2",
     "run-sequence": "^2.2.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "angular": "^1.7.4"
+    "angular": "^1.7.8"
   }
 }
