@@ -1,6 +1,8 @@
-## Synopsis
+## About
   
 A seed start to a gulp project supporting SASS/SCSS compilation, linting, embedding angular directives, javascript minification, bundling, and launching servers and proxies right out of the box.
+
+* Visit [my website](https://jrquick.com) for me cool stuff!
 
 ## Example
 
